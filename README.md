@@ -7,7 +7,7 @@ This feature adds an extra field **tenant_id=< YOUR_TENANT_ID>\n** needed for in
 
 
 ## What is the Cheshire Cat Widget: 
-**This is a fork of the official react widget created by Andrea Pesce on  https://github.com/AndreaPesce200j2/widget-CCAT-react/tree/master**
+**This is a fork of the official react widget created by Andrea Pesce on  https://github.com/AndreaPesce2002/widget-CCAT-react**
 
 The Cheshire Cat React widget is a widget built on the React Framework and is designed to be used along with the Cheshire Cat AI framework with the purpose to act as an LLM powered assistant that can be easily installed on any website. 
 
