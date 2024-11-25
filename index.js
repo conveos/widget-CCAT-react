@@ -23,7 +23,7 @@ const Widget_CCAT = ({
       sorryPhrase: "Sorry , something went wrong ...",
       chatUnderneathMessage: "The assistant sometimes can 'lie', please take care.",
       widget_loading_message : "Loading, please wait...",
-      proccess_wait_text : "Pl ease wait till the proccess has finished."
+      process_wait_text : "Pl ease wait till the process has finished."
       
     }
   }
@@ -77,7 +77,7 @@ const Widget_CCAT = ({
   }, [messages]);
 
 // this function handles the messages received from the Cat
-// where it concatinates the most recent token to the most recent messages.text
+// where it concatenates the most recent token to the most recent messages.text
   const msgTokenAdd = (msg) => {
     setMessages((prevMessages) => {
       // Create a copy of the last message and append the new token
@@ -328,7 +328,7 @@ const Widget_CCAT = ({
   
             {spinner ? (
               <div style={{ alignSelf: "center" }}>
-                {translator('proccess_wait_text')} 
+                {translator('process_wait_text')} 
               </div>
             ) : (
               " "
