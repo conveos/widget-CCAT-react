@@ -23,7 +23,7 @@ const Widget_CCAT = ({
       sorryPhrase: "Sorry , something went wrong ...",
       chatUnderneathMessage: "The assistant sometimes can 'lie', please take care.",
       widget_loading_message : "Loading, please wait...",
-      process_wait_text : "Pl ease wait till the process has finished."
+      process_wait_text : "Please wait till the process has finished."
       
     }
   }
