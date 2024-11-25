@@ -7,13 +7,30 @@ import { IoSend } from "react-icons/io5";
 import Button from "@mui/material/Button";
 import { CatClient } from "ccat-api";
 
+
 const Widget_CCAT = ({
   baseUrl = "localhost",
   port = "1865",
-  initialPhrase = "Ciao Sono lo Stregatto, una intelligenza artificiale curiosa e cortese. Come posso aiutarti?",
-  sorryPhrase = "ops... il gatto ha avuto qualche problema",
-  chatUnderneathMessage = "i LLM posso fare errori, stai attento alle allucinazioni",
+  open_icon =  "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg", 
+  closed_icon = "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg",
+  sockets_await = 5,
+  widget_width = 900,
+  widget_height = 800,
+
+  translatedText = {
+    en: {  
+    initialPhrase: "Welcome, how may I assist you today?",
+      sorryPhrase: "Sorry , something went wrong ...",
+      chatUnderneathMessage: "The assistant sometimes can 'lie', please take care.",
+      widget_loading_message : "Loading, please wait...",
+      proccess_wait_text : "Pl ease wait till the proccess has finished."
+      
+    }
+  }
+
 }) => {
+
+
   const [isHovered, setIsHovered] = useState(false);
   const [isOpenChat, setIsOpenChat] = useState(false);
   const [canAnimate, setCanAnimate] = useState(true);
@@ -24,11 +41,65 @@ const Widget_CCAT = ({
   const [gatto_attivo, setGattoAttivo] = useState(false);
   const [cat, setcat] = useState(false);
 
-  // Il resto del codice rimane invariato fino a sendMessage
 
+    const [spinner,setSpinner] = useState(true);
+  
+
+  const socketCounter = useRef(0);
+  const clientFlag = useRef(false);
+
+  const userPreferredLang = navigator.language ;  //the return value is  for example : en-EN
+  const languageCode = userPreferredLang.split('-')[0]; 
+
+ 
+
+
+// this function in combination with the above json , helps us determine
+// the preferred Language of the user's browser
+  const translator = ( phrase ) => {
+
+    const language = translatedText[languageCode] || translatedText['en'];      
+    return language[phrase] || console.log(`Error , translation for ${phrase} not found.`);
+}
+
+
+
+// function that gets the chat view on the bottom on every new update on the messages
+  const scrollToBottom = () => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
+
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+// this function handles the messages received from the Cat
+// where it concatinates the most recent token to the most recent messages.text
+  const msgTokenAdd = (msg) => {
+    setMessages((prevMessages) => {
+      // Create a copy of the last message and append the new token
+      const updatedMessages = [...prevMessages];
+      const latestMessage = { ...updatedMessages[updatedMessages.length - 1] };
+      latestMessage.text += msg ;
+      if( latestMessage.sender === "bot_writing" )
+      {
+        latestMessage.sender = "bot"; // we have to change the sender from bot_writing to bot to disable the loading dots
+      }
+      // Replace the last message with the updated one
+      updatedMessages[updatedMessages.length - 1] = latestMessage;
+      
+      return updatedMessages;
+    });
+  };
+
+// this function handles the message exchange from the part of the user
   const sendMessage = async () => {
     if (input !== "") {
       if (gatto_attivo) {
+
         setIsProcessing(true);
         setMessages([...messages, { text: input, sender: "user" }]);
         setMessages((prevMessages) => [
@@ -38,35 +109,33 @@ const Widget_CCAT = ({
         setInput("");
 
         try {
-          cat.send(input);
+          cat.send(input); 
           cat
             .onConnected(() => {
               console.log("Socket connected");
             })
             .onMessage((msg) => {
-              console.log(msg);
 
-              setMessages((prevMessages) => {
-                const lastMessage = prevMessages[prevMessages.length - 1];
-                if (lastMessage && lastMessage.sender === "bot_writing") {
-                  return prevMessages.slice(0, -1);
-                }
-                return prevMessages;
-              });
-
-              setMessages((prevMessages) => [
-                ...prevMessages,
-                { text: msg.content, sender: "bot" },
-              ]);
-
-              setIsProcessing(false);
+              console.log(`MESSAGE CONTENT: ${msg}\n`); // for debug
+              // Split the message content into words
+              msgTokenAdd(msg.content);
+              if( msg.type === "chat"){
+//              the last message sent is an object containing all the generated message under 
+//              the msg.type = "chat" , so when that comes 
+//              we set processing to false in order to be able to write 
+//              again to the bot
+//              You might want to enable/disable it base on whether your llm is a streaming model or not
+//              the way the current widget works is suitable for streaming
+                setIsProcessing(false);
+              }
+              
             })
             .onError((err) => {
               console.log(err);
               setMessages((prevMessages) => [
                 ...prevMessages,
                 {
-                  text: sorryPhrase,
+                  text: translator("sorryPhrase"),
                   sender: "bot",
                 },
               ]);
@@ -75,55 +144,115 @@ const Widget_CCAT = ({
               console.log("Socket disconnected");
             });
         } catch (error) {
-          console.error("Errore nel ricevere la risposta del bot:", error);
+          console.error("Error receiving bot response :", error);
           setMessages((prevMessages) => [
             ...prevMessages,
-            { text: sorryPhrase, sender: "bot" },
+            { text: translator('sorryPhrase'), sender: "bot" },
           ]);
         }
       }
     }
   };
 
-  // Aggiungi un messaggio iniziale quando il componente viene montato
-  useEffect(() => {
-    async function restCCAT() {
+
+ async function restCCAT() {    
+    if(!clientFlag.current){
+
+      // in the original widget by Andrea Pesce , it is : setcat instead of setCat 
       setcat(
         new CatClient({
-          baseUrl: baseUrl,
-          port: port,
+          baseUrl,
+          port,
+          userId : "DourakiesNeuer"
         })
           .onConnected(() => {
-            console.log("Socket connected");
+            console.log(`Socket connected ${socketCounter.current}`);                  
+            clientFlag.current = true;
             setGattoAttivo(true);
+            if(socketCounter.current < sockets_await ){     
+              socketCounter.current++;
+              setMessages([
+                {
+                  text: translator("widget_loading_message") ,
+                  sender: "bot",
+                },
+              ]);       
+            }
+            else{
+              setMessages([
+                {
+                  text: translator('initialPhrase') ,
+                  sender: "bot",
+                },
+              ]);        
+              setSpinner(false);        
+              
+          }      
+          
           })
           .onError((err) => {
             console.log(err);
+            setSpinner(false);
+            clientFlag.current = true;
             setGattoAttivo(false);
           })
       );
-      if (gatto_attivo) {
-        setMessages([
-          {
-            text: initialPhrase,
-            sender: "bot",
-          },
-        ]);
-        cat.api.memory.wipeConversationHistory();
-        console.log(cat.api);
-      } else {
-        setMessages([
-          {
-            text: sorryPhrase,
-            sender: "bot",
-          },
-        ]);
-      }
     }
-    restCCAT();
-  }, [gatto_attivo]);
+    if(cat){
+      cat.api.memory.wipeConversationHistory(); 
+    }   
+  }
 
-  // Il resto del codice rimane invariato fino alla fine del componente
+
+  useEffect(() => {
+    restCCAT();
+  }, [gatto_attivo,socketCounter]);
+
+
+
+  const Spinner = () => {
+    const mountTime = React.useRef(Date.now());
+    const mountDelay = -(mountTime.current % 1000);
+    
+    return (
+      <div className="spinner-container">     
+        <div className="spinner" id="spinner" style={{ '--spinner-delay': `${mountDelay}ms`}}></div>    
+      </div>
+    );
+  };
+
+
+
+  useEffect(() => {
+
+    const targetWindow = window.parent.window;
+    const origin = '*';
+    //Iframe dimensions
+    const openDimensions = { width: widget_width * 1.1, height: widget_height * 1.1 };
+    const closedDimensions = { width: 90, height: 90 };
+
+    if (!isOpenChat) {      
+      targetWindow.postMessage({ 
+        type: 'widgetClosed', 
+        dimensions: closedDimensions 
+      }, origin);
+    } else {      
+      targetWindow.postMessage({ 
+        type: 'widgetOpened', 
+        dimensions: openDimensions 
+      }, origin);
+    }
+    }, [isOpenChat]);
+
+
+  
+
+  const chatStyle = isOpenChat ? {
+    width: `${widget_width}px`,
+    height: `${widget_height}px`,
+    overflow: 'hidden',
+  } : {};
+
 
   return (
     <motion.div
@@ -144,32 +273,46 @@ const Widget_CCAT = ({
           : null
       }
     >
-      <div className="rectangle">
+      <div className={!isOpenChat ? "rectangle-closed" : "rectangle" }>
         {isOpenChat ? (
-          <div
-            className="close-icon"
-            onClick={() => {
-              setIsOpenChat(false);
-            }}
-          >
-            X
+          <div className="chat-header">
+            <div className="rectangle-img-container">
+              {/* you can have 2 different images on closed chat and on open chat,
+               just change the img source in the constractor */}
+              <img
+                className="open-chat-icon"
+                src = {open_icon}
+                alt="open chat icon"
+             />
+            </div>
+  
+            <div
+              className="close-chat-X"
+              onClick={() => {
+                setIsOpenChat(false);
+              }}
+            >
+              <svg className="circle-X" viewBox="0 0 24 24">
+                <line x1="3" y1="3" x2="21" y2="21" stroke="white" strokeWidth="2" />
+                <line x1="3" y1="21" x2="21" y2="3" stroke="white" strokeWidth="2" />
+              </svg>
+            </div>
           </div>
         ) : (
-          ""
+          <img
+            className="closed-chat-icon"
+            src = {closed_icon}
+            alt="close chat icon"
+          />
         )}
-        <img
-          src={
-            "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg"
-          }
-          alt="cat Icon"
-        />
+  
         {isOpenChat ? (
           <div className="chat-page">
             <div className="chat-messages" ref={messagesContainerRef}>
               {messages.map((message, index) => (
                 <div key={index} className={`message ${message.sender}`}>
-                  {message.sender === "bot_writing" ? (
-                    <div class="dots">
+                  { message.sender === "bot_writing" ? (
+                    <div className="dots">
                       <div></div>
                       <div></div>
                       <div></div>
@@ -179,46 +322,63 @@ const Widget_CCAT = ({
                   )}
                 </div>
               ))}
+  
+              {spinner && <Spinner />}
             </div>
-            <div className="chat-input">
-              <TextField
-                label="chiaccera con il CCAT"
-                variant="standard"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyPress={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    sendMessage();
-                  }
-                }}
-                style={{ width: "100%" }}
-                disabled={isProcessing || !gatto_attivo}
-              />
-              <Button
-                variant="contained"
-                onClick={sendMessage}
-                disabled={isProcessing || !gatto_attivo}
-              >
-                <IoSend />
-              </Button>
-            </div>
-            <p
-              style={{
-                fontSize: "0.8rem",
-                margin: "0",
-                color: "#999",
-              }}
-            >
-              {chatUnderneathMessage}
-            </p>
+  
+            {spinner ? (
+              <div style={{ alignSelf: "center" }}>
+                {translator('proccess_wait_text')} 
+              </div>
+            ) : (
+              " "
+            )}
+  
+            {!spinner ? (
+              <>
+                <div className="chat-input">
+                  <TextField
+                    label="Feel free to ask anything!"
+                   variant="standard"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyUp={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        sendMessage();
+                      }
+                    }}
+                    style={{ width: "100%" }}
+                    disabled={isProcessing || !gatto_attivo}
+                  />
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={sendMessage}
+                    disabled={isProcessing || !gatto_attivo}
+                  >
+                    <IoSend />
+                  </Button>
+                </div>
+                <p
+                  style={{
+                    fontSize: "0.8rem",
+                    margin: "0",
+                    color: "#999",
+                  }}
+                >
+                  { translator("chatUnderneathMessage") }
+                </p>
+              </>
+            ) : (
+              ""
+            )}
           </div>
-        ) : (
-          ""
-        )}
+        ) : null}
       </div>
     </motion.div>
   );
+  
 };
 
 export default Widget_CCAT;
