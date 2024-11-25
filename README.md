@@ -1,5 +1,14 @@
-# Cheshire Cat React Widget v2
-## What is the Cheshire Cat Widget:
+# Cheshire Cat React Widget v2 - Tenancy Plugin Feature : 
+
+This feature of the Cheshire Cat AI React Widget v2 is a version that goes along with the Tenancy Plugin, which enables the capability to use the Cheshire Cat and the widget in multiple environments while only having a **Single Cheshire Cat Instance** .
+See more on the : < URL NEEDED HERE >
+
+This feature adds an extra field **tenant_id=< YOUR_TENANT_ID>\n** needed for initialization which later added as a **prefix** whenever the user sends a message, on the sendMessage function of the widget. 
+
+
+## What is the Cheshire Cat Widget: 
+**This is a fork of the official react widget created by Andrea Pesce on  https://github.com/AndreaPesce200j2/widget-CCAT-react/tree/master**
+
 The Cheshire Cat React widget is a widget built on the React Framework and is designed to be used along with the Cheshire Cat AI framework with the purpose to act as an LLM powered assistant that can be easily installed on any website. 
 
 By utilizing the Cheshire Cat AI's plugin customization capabilities you can adjust the behavior of the assistant to suit the needs of your orginazation/application.
@@ -26,7 +35,6 @@ This new version of the Widget is operating on the same design as the widget mad
 
 More information on the updated and improved capabilities of the widget follow bellow.
 
-**This is a fork of the official react widget created by Andrea Pesce on  https://github.com/AndreaPesce200j2/widget-CCAT-react/tree/master**
 
 
 ## How to Integrate the widget in your App : 

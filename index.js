@@ -16,7 +16,7 @@ const Widget_CCAT = ({
   sockets_await = 5,
   widget_width = 900,
   widget_height = 800,
-
+  tenant_id = "random_tenant",
   translatedText = {
     en: {  
     initialPhrase: "Welcome, how may I assist you today?",
@@ -109,7 +109,7 @@ const Widget_CCAT = ({
         setInput("");
 
         try {
-          cat.send(input); 
+          cat.send(`tenant_id=${tenant_id}\n${input}`); 
           cat
             .onConnected(() => {
               console.log("Socket connected");
