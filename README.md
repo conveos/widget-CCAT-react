@@ -26,7 +26,7 @@ This new version of the Widget is operating on the same design as the widget mad
 
 More information on the updated and improved capabilities of the widget follow bellow.
 
-**This is a fork of the official react widget created by Andrea Pesce on  https://github.com/AndreaPesce200j2/widget-CCAT-react/tree/master**
+**This is a fork of the official react widget created by Andrea Pesce on  https://github.com/AndreaPesce2002/widget-CCAT-react**
 
 
 ## How to Integrate the widget in your App : 
