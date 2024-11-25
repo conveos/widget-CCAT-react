@@ -27,7 +27,7 @@ The widget consists of the functions bellow :
 
 ## How to Integrate the widget you App : 
 
-You can clone this widget in the src/ directory of your project and import it on your App.js as bellow :
+**You can clone this widget in the src/ directory of your project and import it on your App.js as bellow**:
 ```js
 import WidgetCCAT from 'widget-ccat';
 
@@ -58,6 +58,7 @@ function App() {
   );
 }
 ```
+# Components and Functionalities
 
 **Where the arguments passed above are :**
 |**Arguments** | **Type**      | **Description**               | **Default Value** |
