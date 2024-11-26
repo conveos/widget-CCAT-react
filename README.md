@@ -1,5 +1,8 @@
 # Cheshire Cat React Widget v2
 ## What is the Cheshire Cat Widget:
+
+**This is a fork of the official react widget created by Andrea Pesce on  https://github.com/AndreaPesce2002/widget-CCAT-react**
+
 The Cheshire Cat React widget is a widget built on the React Framework and is designed to be used along with the Cheshire Cat AI framework with the purpose to act as an LLM powered assistant that can be easily installed on any website. 
 
 By utilizing the Cheshire Cat AI's plugin customization capabilities you can adjust the behavior of the assistant to suit the needs of your orginazation/application.
@@ -26,7 +29,6 @@ This new version of the Widget is operating on the same design as the widget mad
 
 More information on the updated and improved capabilities of the widget follow bellow.
 
-**This is a fork of the official react widget created by Andrea Pesce on  https://github.com/AndreaPesce2002/widget-CCAT-react**
 
 
 ## How to Integrate the widget in your App : 

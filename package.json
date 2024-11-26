@@ -1,32 +1,35 @@
 {
-    "name": "widget-ccat-v2",
-    "version": "2.0.1",
-    "description": "A simple installable widget made for the Cheshire Cat AI framework.",
-    "main": "index.jsx", 
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "keywords": ["react", "chat", "widget", "ccat", "cheshire-cat-ai","ai"],
-    "author": "Conveos",
-    "license": "MIT",
-    "repository": {
-      "type": "git",
-      "url": " "
-    },
-    "dependencies": {
-      "@emotion/react": "^11.11.4",
-      "@emotion/styled": "^11.11.5",
-      "@mui/icons-material": "^5.14.13",
-      "@mui/material": "^5.14.13",
-      "@testing-library/jest-dom": "^5.17.0",
-      "@testing-library/react": "^13.4.0",
-      "@testing-library/user-event": "^13.5.0",
-      "ccat-api": "latest",
-      "framer-motion": "^10.12.18",
-      "react": "^18.3.1",
-      "react-dom": "^18.3.1",
-      "react-icons": "^4.11.0",
-      "react-scripts": "5.0.1",
-      "web-vitals": "^2.1.4"
-    }
+  "name": "widget_cat_test_nuer",
+  "version": "1.0.1",
+  "description": "test test",
+  "main": "./build/index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/conveos/widget-CCAT-react.git"
+  },
+  "author": "manousakos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/conveos/widget-CCAT-react/issues"
+  },
+  "homepage": "https://github.com/conveos/widget-CCAT-react#readme",
+  "dependencies": {
+        "@emotion/react": "^11.11.4",
+        "@emotion/styled": "^11.11.5",
+        "@mui/icons-material": "^5.14.13",
+        "@mui/material": "^5.14.13",
+        "@testing-library/jest-dom": "^5.17.0",
+        "@testing-library/react": "^13.4.0",
+        "@testing-library/user-event": "^13.5.0",
+        "ccat-api": "latest",
+        "framer-motion": "^10.12.18",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-icons": "^4.11.0",
+        "react-scripts": "5.0.1",
+        "web-vitals": "^2.1.4"
   }
+}
