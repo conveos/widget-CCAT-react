@@ -1,6 +1,6 @@
 {
   "name": "widget_cat_test_nuer",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "test test",
   "main": "./build/index.js",
   "scripts": {
@@ -17,19 +17,19 @@
   },
   "homepage": "https://github.com/conveos/widget-CCAT-react#readme",
   "dependencies": {
-        "@emotion/react": "^11.11.4",
-        "@emotion/styled": "^11.11.5",
-        "@mui/icons-material": "^5.14.13",
-        "@mui/material": "^5.14.13",
-        "@testing-library/jest-dom": "^5.17.0",
-        "@testing-library/react": "^13.4.0",
-        "@testing-library/user-event": "^13.5.0",
-        "ccat-api": "latest",
-        "framer-motion": "^10.12.18",
-        "react": "^18.3.1",
-        "react-dom": "^18.3.1",
-        "react-icons": "^4.11.0",
-        "react-scripts": "5.0.1",
-        "web-vitals": "^2.1.4"
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.14.13",
+    "@mui/material": "^5.14.13",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "ccat-api": "latest",
+    "framer-motion": "^10.12.18",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^4.11.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
   }
 }
