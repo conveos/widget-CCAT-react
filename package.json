@@ -1,9 +1,9 @@
 {
   "name": "widget_cat_test_nuer",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "test test",
   "main": "./build/index.js",
-  "files":[
+  "files": [
     "./src"
   ],
   "scripts": {
