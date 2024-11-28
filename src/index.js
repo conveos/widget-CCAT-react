@@ -8,6 +8,8 @@ import Button from "@mui/material/Button";
 import { CatClient } from "ccat-api";
 
 
+console.log("React version in da WIDGET:", React.version);
+
 const Widget_CCAT = ({
   baseUrl = "localhost",
   port = "1865",

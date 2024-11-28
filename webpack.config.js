@@ -1,58 +1,33 @@
-// var path = require("path");
-
-// module.exports = {
-//     mode: "production",
-//     entry: "./src/index.js",
-//     output: {
-//       path: path.resolve("build"),
-//       filename: "index.js",
-//       libraryTarget: "commonjs2"
-//     },
-//     module: {
-//       rules: [
-//         { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
-//         {
-//           test: /\.css$/,
-//           use: ['style-loader', 'css-loader']
-//         }
-//       ]
-//     },
-//     externals: {
-//       react: "react"
-//     }
-  // };
-
-
-  const path = require("path");
+const path = require("path");
+const nodeExternals = require("webpack-node-externals");
 
 module.exports = {
-  mode: "production",
-  entry: "./src/index.js",
+  entry: "./src/index.js", // Main component file
+  mode : "production",
   output: {
-    path: path.resolve(__dirname, "build"), // Ensures the correct directory path
+    path: path.resolve(__dirname, "dist"),
     filename: "index.js",
-    libraryTarget: "commonjs2" // Ensure this is appropriate for your use case
+    library: "Widget_CCAT_v2", // Change to your library's name
+    libraryTarget: "umd",
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            // Ensure your Babel configuration is appropriate
-            presets: ["@babel/preset-env", "@babel/preset-react"]
-          }
-        }
+        use: "babel-loader",
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"] // Consider alternatives for library builds
-      }
-    ]
+        use: ["style-loader", "css-loader"],
+      },
+    ],
   },
-  externals: {
-    react: "react" // Ensure React is intended to be external
-  }
+  externals: [
+    {
+      react: "react",
+      "react-dom": "react-dom"
+    },
+    nodeExternals()
+  ]
 };
