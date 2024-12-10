@@ -54,7 +54,11 @@ const Widget_CCAT = ({
   const languageCode = userPreferredLang.split('-')[0]; 
 
  
+console.log({baseUrl , port, open_icon , closed_icon , sockets_await ,
+  widget_width ,
+  widget_height ,
 
+  translatedText });
 
 // this function in combination with the above json , helps us determine
 // the preferred Language of the user's browser
