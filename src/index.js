@@ -8,7 +8,6 @@ import Button from "@mui/material/Button";
 import { CatClient } from "ccat-api";
 
 
-console.log("React version in da WIDGET:", React.version);
 
 const Widget_CCAT = ({
   baseUrl = "localhost",
@@ -54,12 +53,6 @@ const Widget_CCAT = ({
   const languageCode = userPreferredLang.split('-')[0]; 
 
  
-console.log({baseUrl , port, open_icon , closed_icon , sockets_await ,
-  widget_width ,
-  widget_height ,
-
-  translatedText });
-
 // this function in combination with the above json , helps us determine
 // the preferred Language of the user's browser
   const translator = ( phrase ) => {
@@ -167,8 +160,8 @@ console.log({baseUrl , port, open_icon , closed_icon , sockets_await ,
       // in the original widget by Andrea Pesce , it is : setcat instead of setCat 
       setcat(
         new CatClient({
-          baseUrl,
-          port,
+          host : baseUrl,
+          port : port,
           userId : "DourakiesNeuer"
         })
           .onConnected(() => {
@@ -388,4 +381,3 @@ console.log({baseUrl , port, open_icon , closed_icon , sockets_await ,
 };
 
 export default Widget_CCAT;
-//module.exports = Widget_CCAT;
