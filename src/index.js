@@ -387,5 +387,5 @@ console.log({baseUrl , port, open_icon , closed_icon , sockets_await ,
   
 };
 
-//export default Widget_CCAT;
-module.exports = Widget_CCAT;
+export default Widget_CCAT;
+//module.exports = Widget_CCAT;
