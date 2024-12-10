@@ -383,4 +383,5 @@ const Widget_CCAT = ({
   
 };
 
-export default Widget_CCAT;
+//export default Widget_CCAT;
+module.exports = Widget_CCAT;
