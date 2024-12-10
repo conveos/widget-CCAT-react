@@ -1,6 +1,6 @@
 {
   "name": "widget_cat_test_nuer",
-  "version": "1.1.14",
+  "version": "1.1.15",
   "description": "test test",
   "main": "dist/index.js",
   "files": [

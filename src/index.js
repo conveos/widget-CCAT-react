@@ -160,8 +160,8 @@ const Widget_CCAT = ({
       // in the original widget by Andrea Pesce , it is : setcat instead of setCat 
       setcat(
         new CatClient({
-          host : baseUrl,
-          port : port,
+          baseUrl,
+          port,
           userId : "DourakiesNeuer"
         })
           .onConnected(() => {
