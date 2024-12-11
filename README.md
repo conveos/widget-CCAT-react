@@ -49,6 +49,7 @@ function App() {
       <WidgetCCAT 
         baseUrl="http://localhost" 
         port="1865"
+        userID = "user",
         closed_icon= "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg",
         open_icon = "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg",
         sockets_await = 5,
