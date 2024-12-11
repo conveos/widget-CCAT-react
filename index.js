@@ -11,6 +11,7 @@ import { CatClient } from "ccat-api";
 const Widget_CCAT = ({
   baseUrl = "localhost",
   port = "1865",
+  userID = "user",
   open_icon =  "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg", 
   closed_icon = "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg",
   sockets_await = 5,
@@ -163,7 +164,7 @@ const Widget_CCAT = ({
         new CatClient({
           baseUrl,
           port,
-          userId : "DourakiesNeuer"
+          userID 
         })
           .onConnected(() => {
             console.log(`Socket connected ${socketCounter.current}`);                  
