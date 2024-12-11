@@ -1,19 +1,37 @@
 {
   "name": "widget-ccat-v2",
-  "version": "1.1.15",
-  "description": "test test",
+  "version": "1.0.0",
+  "description": "This is a chatbot widget supported by the Cheshire Cat AI framework",
   "main": "dist/index.js",
   "files": [
     "dist",
     "README.md"
   ],
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "prepublishOnly": "npm run build"
   },
-  "author": "manousakos",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/conveos/widget-CCAT-react.git#feature"
+  },
+  "keywords": [
+    "widget",
+    "chatbot",
+    "Cheshire",
+    "Cat",
+    "Cheshire",
+    "Cat",
+    "AI"
+  ],
+  "author": "conveos",
   "license": "ISC",
-   "dependencies": {
+  "bugs": {
+    "url": "https://github.com/conveos/widget-CCAT-react/issues"
+  },
+  "homepage": "https://github.com/conveos/widget-CCAT-react/tree/feature#readme",
+  "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.14.13",

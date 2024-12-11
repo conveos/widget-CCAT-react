@@ -163,7 +163,7 @@ const Widget_CCAT = ({
         new CatClient({
           baseUrl,
           port,
-          userId 
+          userID
         })
           .onConnected(() => {
             console.log(`Socket connected ${socketCounter.current}`);                  

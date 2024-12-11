@@ -1,4 +1,4 @@
-# Cheshire Cat React Widget v2
+# Cheshire Cat React Widget v2 NPM PACKAGE
 ## What is the Cheshire Cat Widget:
 
 **This is a fork of the official react widget created by Andrea Pesce on  https://github.com/AndreaPesce2002/widget-CCAT-react**
@@ -30,10 +30,33 @@ This new version of the Widget is operating on the same design as the widget mad
 More information on the updated and improved capabilities of the widget follow bellow.
 
 
+## NPM Package Information:
+
+The npm package is made using Webpack and Babel.
+The exact configurations can be found in the webpack.config.js, .babelrc, and package.json.
+
+In order to update/upgrade the npm package you should:
+* Implement the changes on the src/index.js 
+* Commit any changes
+* Adjust the version of the package on the package.json either manually or by executing : ``` npm version [<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease [--preid=<prerelease-id>] | from-git]  ``` ( for more information regarding the versioning you can visit: https://docs.npmjs.com/cli/v7/commands/npm-version )
+* Execute ``` npm run build``` on the CLI, or just ```bash npm publish ``` which will build the package and then publish it to the npm registry
+
+This way you have successfully updated/upgraded the widget-ccat-v2 npm package! 
+**Note:** If you are interested in making any changes on the way the widget is operating, it could be easier to :
+* clone it from : https://github.com/conveos/widget-CCAT-react/tree/master
+* make an npm link and link the package to your project ( for more information regarding this visit : https://docs.npmjs.com/cli/v9/commands/npm-link)
+
+And after you have made sure that the changes you have implemented are working, you can proceed to implement the changes to the npm package.
 
 ## How to Integrate the widget in your App : 
 
-**You can clone this widget in the src/ directory of your project and import it on your App.js as bellow**:
+**You can use this widget:**
+* Clone the wigdet in the src/ directory of your project 
+Or
+* Install the npm package of this widget by executing ```bash npm i widget-ccat-v2 ```, 
+
+And import it on your App.js
+
 ```js
 import WidgetCCAT from 'widget-ccat';
 
@@ -43,6 +66,7 @@ function App() {
       <WidgetCCAT 
         baseUrl="http://localhost" 
         port="1865"
+        userID = "user",
         closed_icon= "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg",
         open_icon = "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg",
         sockets_await = 5,
