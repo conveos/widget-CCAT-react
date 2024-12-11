@@ -38,8 +38,8 @@ The exact configurations can be found in the webpack.config.js, .babelrc, and pa
 In order to update/upgrade the npm package you should:
 * Implement the changes on the src/index.js 
 * Commit any changes
-* Adjust the version of the package on the package.json either manually or by executing : ```bash npm version [<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease [--preid=<prerelease-id>] | from-git]  ``` ( for more information regarding the versioning you can visit: https://docs.npmjs.com/cli/v7/commands/npm-version )
-* Execute ```bash npm run build``` on the CLI, or just ```bash npm publish ``` which will build the package and then publish it to the npm registry
+* Adjust the version of the package on the package.json either manually or by executing : ``` npm version [<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease [--preid=<prerelease-id>] | from-git]  ``` ( for more information regarding the versioning you can visit: https://docs.npmjs.com/cli/v7/commands/npm-version )
+* Execute ``` npm run build``` on the CLI, or just ```bash npm publish ``` which will build the package and then publish it to the npm registry
 
 This way you have successfully updated/upgraded the widget-ccat-v2 npm package! 
 **Note:** If you are interested in making any changes on the way the widget is operating, it could be easier to :
