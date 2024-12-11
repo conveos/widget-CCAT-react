@@ -31,7 +31,13 @@ More information on the updated and improved capabilities of the widget follow b
 
 ## How to Integrate the widget in your App : 
 
-**You can clone this widget in the src/ directory of your project and import it on your App.js as bellow**:
+**You can use this widget:**
+* Clone the wigdet in the src/ directory of your project 
+Or
+* Install the npm package of this widget by executing ```bash npm i widget-ccat-v2 ```, 
+
+And import it on your App.js
+
 ```js
 import WidgetCCAT from 'widget-ccat';
 
