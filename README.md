@@ -75,6 +75,7 @@ function App() {
 |:-------------:|:-------------:|:------------------------------|:-----------------:|
 | baseUrl       | string        | The url to your Cat server    | localhost         |
 | port          | string        | The port to your server       | 1865              |
+| userID        | string        | The userID of the widget-client| user             |
 |closed_icon    | string        | The url to the icon that will show when the widget is closed |  https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg|
 |open_icon      | string        |  The url to the icon that will show when the widget is closed | https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg  |
 |sockets_await  | int           | The number of socket connections in order to let the cat stabilize|5|
