@@ -35,7 +35,16 @@ This new version of the Widget is operating on the same design as the widget mad
 
 More information on the updated and improved capabilities of the widget follow bellow.
 
+### Widget-CCat-v2 versions 
 
+Currently there are three applications of the Widget-CCat-v2 available by us, which are :
+* **widget-ccat-v2** on : https://github.com/conveos/widget-CCAT-react
+* **widget-ccat-v2 with the Tenancy CCat plugin compatibility** on : https://github.com/conveos/widget-CCAT-react/tree/feature/tenancy
+* **widget-ccat-v2 npm package** on : https://github.com/conveos/widget-CCAT-react/tree/feature/npm-widget-v2
+
+All the above versions are available under the same repo but on different branches 
+
+See more on the Tenancy Plugin here : https://github.com/conveos/cheshirecat-tenancy-plugin
 
 ## How to Integrate the widget in your App : 
 
