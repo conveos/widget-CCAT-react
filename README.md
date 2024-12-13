@@ -8,7 +8,7 @@ This widget's Communication is based on the Cheshire Cat API available through n
 
 This new version of the Widget is operating on the same design as the widget made by Andrea Pesce with some additional functions and improvements on the way the token streaming is being handled, how the widget is being displayed and many more . 
 
-**The widget consists of the functions bellow**:
+**The widget consists of the functions below**:
 * RestCat along with a useEffect hook : a function that initializes a new Cat Connection and websocket stabilization.
 * sendMessage along with a useEffect hook : a function that manages the exchange of messages between the user and the Cat.
 * Spinner : a small spinner animation that is being displayed on widget start until the websockets get stabilized.
@@ -24,7 +24,7 @@ This new version of the Widget is operating on the same design as the widget mad
 * Handling multiple Languages dynamically
 * Added the possibility to have open-chat-img and close-chat-img
 
-More information on the updated and improved capabilities of the widget follow bellow.
+More information on the updated and improved capabilities of the widget follow below.
 
 **This is a fork of the official react widget created by Andrea Pesce on  https://github.com/AndreaPesce2002/widget-CCAT-react**
 
@@ -43,14 +43,15 @@ See more on the Tenancy Plugin here : https://github.com/conveos/cheshirecat-ten
 
 ## How to Integrate the widget in your App : 
 
-#### **You can use this widget either by :**
-* **Clone the wigdet in the src/ directory of your project** 
-* **Install the npm package of this widget by executing ```bash npm i widget-ccat-v2 ```** 
+Install the npm package of this widget by executing
+```bash
+npm i widget-ccat-v2`
+```
 
-And import it on your App.js
+Add the following code to  your `App.js`
 
 ```js
-import WidgetCCAT from 'widget-ccat';
+import WidgetCCAT from 'widget-ccat-v2';
 
 function App() {
   return (
@@ -93,7 +94,7 @@ function App() {
 |sockets_await  | int           | The number of socket connections in order to let the cat stabilize|5|
 |widget_width   | int           | The desired width of the widget | 330 |
 |widget_height  | int           | The desired width of the widget | 600 |
-|translatedText | Object        | An object that contains the widget's message texts | See bellow |  
+|translatedText | Object        | An object that contains the widget's message texts | See below |  
 
 **Where the translatedText contents are :**
 
@@ -147,7 +148,7 @@ translatedtext = {
   .
 }
 ```
-Where there each language must contain the elements bellow:
+Where there each language must contain the elements below:
 * initialPhrase
 * sorryPhrase
 * chatUnderneathMessage
@@ -173,6 +174,11 @@ The functionality above is being handled by the function translator(), where the
 #### Additional Capabilities
 
 * You can also add different images for when the chat is closed and when it is open, just change the parameters of open_icon and close-icon when initializing the widget 
+
+## How to add the widget code to your App (dbugging/extending, etc.)
+Clone the wigdet in the src/ directory of your project...
+
+npm i... 
 
 
 ## Useful links
