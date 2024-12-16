@@ -48,7 +48,7 @@ Install the npm package of this widget by executing
 npm i widget-ccat-v2`
 ```
 
-Add the following code to  your `App.js`
+Add the following code to your `App.js`
 
 ```js
 import WidgetCCAT from 'widget-ccat-v2';
@@ -56,28 +56,24 @@ import WidgetCCAT from 'widget-ccat-v2';
 function App() {
   return (
     <div>
-      <WidgetCCAT 
-        baseUrl="http://localhost" 
+      <Widget_CCAT
+        baseUrl="localhost" 
         port="1865"
-        userID = "user",
-        closed_icon= "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg",
-        open_icon = "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg",
-        sockets_await = 5,
-        widget_width = 330,
-        widget_height = 600,
+        userID = "user"
+        closed_icon= "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg"
+        open_icon = "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg"
+        sockets_await = {5}
+        widget_width = {330} 
+        widget_height = {600}
 
-        translatedText = {
-          en: {  
-            initialPhrase: "Welcome, how may I assist you today?",
-            sorryPhrase: "Sorry , something went wrong ...",
-            chatUnderneathMessage: "The assistant sometimes can 'lie', please take care.",
-            widget_loading_message : "Loading, please wait...",
-            process_wait_text : "Please wait till the process has finished."
-            
-          }
-        } 
+        translatedText =   {{ en :  {
+          initialPhrase: "Nigga nigga?",
+          sorryPhrase: "Sorry , something went wrong ...",
+          chatUnderneathMessage: "The assistant sometimes can 'lie', please take care.",
+          widget_loading_message : "Loading, please wait...",
+          process_wait_text : "Please wait till the proccess has finished."
+        }}}
       />
-    </div>
   );
 }
 ```
@@ -176,10 +172,41 @@ The functionality above is being handled by the function translator(), where the
 * You can also add different images for when the chat is closed and when it is open, just change the parameters of open_icon and close-icon when initializing the widget 
 
 ## How to add the widget code to your App (dbugging/extending, etc.)
-Clone the wigdet in the src/ directory of your project...
 
-npm i... 
+### Installing The Widget
+There are two ways to install the widget to your App:
+1. Clone the repository in your application :
+```bash
+git clone <github link> 
+``` 
+And then link the index.js file in you app with :
+```js
+import Widget_CCAT from './path/index.js'
+```
+2. Install the npm package of the widget-ccat-v2:
+```bash
+npm install widget-ccat-v2
+```
+and then link it in your app with :
+```js
+import Widget_CCAT from "widget-ccat-v2" 
+```
 
+### Debuging The Widget : 
+
+In order to debug your App while using the widget-ccat-v2 widget, it might be better to first install the widget by cloning the repo and then debug it. The code of the npm package is the same as the one in the repo , so if there are not any problems with the cloned widget , there should not be any with the npm package.
+
+### Extending The Widget :
+
+In order to extend the capabilities of the widget, it is advised to clone the widget loccaly as it is easier to manage and debug. 
+
+## Tenancy Plugin Feature  
+
+There is also a version of the widget under the feature/tenancy branch that is designed to work along with the Tenancy Plugin mad for the Cheshire Cat framework ( see here : https://github.com/conveos/cheshirecat-tenancy-plugin).
+
+The Tenancy Plugin feature  enables the capability to use the Cheshire Cat and the widget in multiple environments while only having a Single Cheshire Cat Instance . 
+
+This feature adds an extra field **"tenant_id=< YOUR_TENANT_ID>\n"** needed for initialization which later added as a prefix whenever the user sends a message, on the sendMessage function of the widget.
 
 ## Useful links
 
