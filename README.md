@@ -175,19 +175,32 @@ The functionality above is being handled by the function translator(), where the
 
 ### Installing The Widget
 There are two ways to install the widget to your App:
-1. Clone the repository in your application :
+1. **Clone the repository in your application :**
 ```bash
 git clone <github link> 
 ``` 
-And then link the index.js file in you app with :
+**Install these dependencies :**
+```bash
+npm install @emotion/styled@^11.11.5 @mui/icons-material@^5.14.13 @mui/material@^5.14.13 @testing-library/jest-dom@^5.17.0 @testing-library/react@^13.4.0 @testing-library/user-event@^13.5.0 ccat-api@0.10.3 framer-motion@^10.12.18 react-icons@^4.11.0
+```
+and make sure you have react, react-dom, react-scripts, web-vitals to the versions : 
+```
+"react": "^18.3.1"
+"react-dom": "^18.3.1"
+"react-scripts": "5.0.1",
+"web-vitals": "^2.1.4"
+```
+**And then link the index.js file in you app with :**
 ```js
 import Widget_CCAT from './path/index.js'
 ```
-2. Install the npm package of the widget-ccat-v2:
+
+
+2. **Install the npm package of the widget-ccat-v2:**
 ```bash
 npm install widget-ccat-v2
 ```
-and then link it in your app with :
+**and then link it in your app with :**
 ```js
 import Widget_CCAT from "widget-ccat-v2" 
 ```
