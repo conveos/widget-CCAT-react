@@ -67,7 +67,7 @@ function App() {
         widget_height = {600}
 
         translatedText =   {{ en :  {
-          initialPhrase: "Nigga nigga?",
+          initialPhrase: 
           sorryPhrase: "Sorry , something went wrong ...",
           chatUnderneathMessage: "The assistant sometimes can 'lie', please take care.",
           widget_loading_message : "Loading, please wait...",
@@ -175,35 +175,129 @@ The functionality above is being handled by the function translator(), where the
 
 ### Installing The Widget
 There are two ways to install the widget to your App:
-1. **Clone the repository in your application :**
-```bash
-git clone <github link> 
-``` 
-**Install these dependencies :**
-```bash
-npm install @emotion/styled@^11.11.5 @mui/icons-material@^5.14.13 @mui/material@^5.14.13 @testing-library/jest-dom@^5.17.0 @testing-library/react@^13.4.0 @testing-library/user-event@^13.5.0 ccat-api@0.10.3 framer-motion@^10.12.18 react-icons@^4.11.0
-```
-and make sure you have react, react-dom, react-scripts, web-vitals to the versions : 
+#### 1. **Clone the repository in your application :**
+
+In order to install the widget App ,  try to clone it in the ./src of your project, so that the Widget-CCat can be imported on the project.
+Also the widget has a number of dependencies in order to operate as intended, which are : 
+
+* @emotion/styled@^11.11.5 
+* @mui/icons-material@^5.14.13 
+* @mui/material@^5.14.13
+* @testing-library/jest-dom@^5.17.0
+* @testing-library/react@^13.4.0
+* @testing-library/user-event@^13.5.0
+* ccat-api@0.10.3
+* framer-motion@^10.12.18
+* react-icons@^4.11.0
+
+And the below are the requirements to run the widget along with react app:
 ```
 "react": "^18.3.1"
 "react-dom": "^18.3.1"
 "react-scripts": "5.0.1",
 "web-vitals": "^2.1.4"
 ```
-**And then link the index.js file in you app with :**
+**Steps to integrate the widget**
+
+* Make sure you have react, react-dom, react-scripts, web-vitals to these versions on the root package.json : 
+```
+"react": "^18.3.1"
+"react-dom": "^18.3.1"
+"react-scripts": "5.0.1",
+"web-vitals": "^2.1.4"
+```
+* clone the widget to the working folder:
+
+```bash
+git clone git@github.com:conveos/widget-CCAT-react.git
+``` 
+* Install the dependencies :
+```bash
+npm install @emotion/styled@^11.11.5 @mui/icons-material@^5.14.13 @mui/material@^5.14.13 @testing-library/jest-dom@^5.17.0 @testing-library/react@^13.4.0 @testing-library/user-event@^13.5.0 ccat-api@0.10.3 framer-motion@^10.12.18 react-icons@^4.11.0
+```
+
+* And then link the index.js file in you app with :
 ```js
-import Widget_CCAT from './path/index.js'
+import Widget_CCAT from './yourPath/widget-CCAT-react/index.js'
+```
+* Add the `<Widget_CCAT>` to your App and the widget is ready to go:
+```js
+
+function App() {
+  return (
+    <div>
+      <Widget_CCAT
+        baseUrl="localhost" 
+        port="1865"
+        userID = "user"
+        closed_icon= "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg"
+        open_icon = "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg"
+        sockets_await = {5}
+        widget_width = {330} 
+        widget_height = {600}
+
+        translatedText =   {{ en :  {
+          initialPhrase: "Welcome, how may I assist you today?",
+          sorryPhrase: "Sorry , something went wrong ...",
+          chatUnderneathMessage: "The assistant sometimes can 'lie', please take care.",
+          widget_loading_message : "Loading, please wait...",
+          process_wait_text : "Please wait till the proccess has finished."
+        }}}
+      />
+  );
+}
 ```
 
 
-2. **Install the npm package of the widget-ccat-v2:**
+
+#### 2. **Install the npm package of the widget-ccat-v2:**
+The Widget's installation is much simpler with using the npm package, as it does not require any dependency handling, but it does require specific versions of react, react-dom, web-vitals and react-scripts, which are :
+**Steps to Integrate npm Widget:**
+
+* Make sure you have react, react-dom, react-scripts, web-vitals to these versions on the root package.json : 
+```
+"react": "^18.3.1"
+"react-dom": "^18.3.1"
+"react-scripts": "5.0.1",
+"web-vitals": "^2.1.4"
+```
+* Installing the widget-ccat-v2 npm package:
+
 ```bash
 npm install widget-ccat-v2
 ```
-**and then link it in your app with :**
+* Import the widget to the app :
 ```js
 import Widget_CCAT from "widget-ccat-v2" 
 ```
+* Add the `<Widget_CCAT>` to your App and the widget is ready to go:
+```js
+
+function App() {
+  return (
+    <div>
+      <Widget_CCAT
+        baseUrl="localhost" 
+        port="1865"
+        userID = "user"
+        closed_icon= "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg"
+        open_icon = "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg"
+        sockets_await = {5}
+        widget_width = {330} 
+        widget_height = {600}
+
+        translatedText =   {{ en :  {
+          initialPhrase: "Welcome, how may I assist you today?",
+          sorryPhrase: "Sorry , something went wrong ...",
+          chatUnderneathMessage: "The assistant sometimes can 'lie', please take care.",
+          widget_loading_message : "Loading, please wait...",
+          process_wait_text : "Please wait till the proccess has finished."
+        }}}
+      />
+  );
+}
+```
+
 
 ### Debuging The Widget : 
 
