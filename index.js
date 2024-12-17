@@ -162,9 +162,9 @@ const Widget_CCAT = ({
       // in the original widget by Andrea Pesce , it is : setcat instead of setCat 
       setcat(
         new CatClient({
-          baseUrl,
-          port,
-          userID 
+          baseUrl : baseUrl,
+          port: port,
+          user:userID 
         })
           .onConnected(() => {
             console.log(`Socket connected ${socketCounter.current}`);                  
