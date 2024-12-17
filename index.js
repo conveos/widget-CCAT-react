@@ -260,7 +260,7 @@ const Widget_CCAT = ({
       className={!isOpenChat ? "cat-icon" : "cat-chat"}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      style={{ overflow: "hidden" }}
+      style={chatStyle}
       animate={{
         rotate:
           canAnimate && isHovered && !isOpenChat ? [0, 30, -30, 10, -10, 0] : 0,
