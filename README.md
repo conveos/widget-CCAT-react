@@ -206,7 +206,7 @@ npm install react@18.3.1 react-dom@18.3.1 react-scripts@5.0.1 web-vitals@2.1.4
 * clone the widget to the working folder:
 
 ```bash
-git clone git@github.com:conveos/widget-CCAT-react.git
+git clone git@github.com:conveos/widget-ccat-react.git
 ``` 
 * Install the dependencies :
 ```bash
