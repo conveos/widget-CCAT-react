@@ -200,11 +200,8 @@ And the below are the requirements to run the widget along with react app:
 **Steps to integrate the widget**
 
 * Make sure you have react, react-dom, react-scripts, web-vitals to these versions on the root package.json : 
-```
-"react": "^18.3.1"
-"react-dom": "^18.3.1"
-"react-scripts": "5.0.1",
-"web-vitals": "^2.1.4"
+```bash
+npm install react@18.3.1 react-dom@18.3.1 react-scripts@5.0.1 web-vitals@2.1.4
 ```
 * clone the widget to the working folder:
 
@@ -261,7 +258,7 @@ The Widget's installation is much simpler with using the npm package, as it does
 "react-scripts": "5.0.1",
 "web-vitals": "^2.1.4"
 ```
-* Installing the widget-ccat-v2 npm package:
+* Installing the widget-ccat-v2 npm package while :
 
 ```bash
 npm install widget-ccat-v2
