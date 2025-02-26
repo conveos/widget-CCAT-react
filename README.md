@@ -51,7 +51,7 @@ npm i widget-ccat-v2`
 Add the following code to your `App.js`
 
 ```js
-import WidgetCCAT from 'widget-ccat-v2';
+import Widget_CCAT from "widget-ccat-v2";
 
 function App() {
   return (
@@ -59,21 +59,24 @@ function App() {
       <Widget_CCAT
         baseUrl="localhost" 
         port="1865"
-        userID = "user"
-        closed_icon= "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg"
-        open_icon = "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg"
-        sockets_await = {5}
-        widget_width = {330} 
-        widget_height = {600}
-
-        translatedText =   {{ en :  {
-          initialPhrase: 
-          sorryPhrase: "Sorry , something went wrong ...",
-          chatUnderneathMessage: "The assistant sometimes can 'lie', please take care.",
-          widget_loading_message : "Loading, please wait...",
-          process_wait_text : "Please wait till the proccess has finished."
-        }}}
+        userID="user"
+        closed_icon="https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg"
+        open_icon="https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg"
+        sockets_await={5}
+        widget_width={330}
+        widget_height={600}
+        translatedText={{
+          en: {
+            initialPhrase: "Welcome, how may I assist you today?",
+            sorryPhrase: "Sorry , something went wrong ...",
+            chatUnderneathMessage:
+              "The assistant sometimes can 'lie', please take care.",
+            widget_loading_message: "Loading, please wait...",
+            process_wait_text: "Please wait till the proccess has finished.",
+          },
+        }}
       />
+    </div>
   );
 }
 ```
@@ -82,7 +85,8 @@ function App() {
 **Where the arguments passed above are :**
 |**Arguments** | **Type**      | **Description**               | **Default Value** |
 |:-------------:|:-------------:|:------------------------------|:-----------------:|
-| baseUrl       | string        | The url to your Cat server    | localhost         |
+| baseUrl       | string        | The uri to your Cat server (without the schema)   | localhost         |
+| secure        | boolean        | false = ws, true = wss    | false         |
 | port          | string        | The port to your server       | 1865              |
 | userID        | string        | The userID of the widget-client| user             |
 |closed_icon    | string        | The url to the icon that will show when the widget is closed |  https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg|
@@ -177,7 +181,7 @@ The functionality above is being handled by the function translator(), where the
 There are two ways to install the widget to your App:
 #### 1. **Clone the repository in your application :**
 
-In order to install the widget App ,  try to clone it in the ./src of your project, so that the Widget-CCat can be imported on the project.
+In order to install the widget App,  try to clone it in the ./src of your project, so that the Widget-CCat can be imported on the project.
 Also the widget has a number of dependencies in order to operate as intended, which are : 
 
 * @emotion/styled@^11.11.5 
@@ -296,19 +300,19 @@ function App() {
 ```
 
 
-### Debuging The Widget : 
+### Debugging The Widget : 
 
-In order to debug your App while using the widget-ccat-v2 widget, it might be better to first install the widget by cloning the repo and then debug it. The code of the npm package is the same as the one in the repo , so if there are not any problems with the cloned widget , there should not be any with the npm package.
+In order to debug your App while using the widget-ccat-v2 widget, it might be better to first install the widget by cloning the repo and then debug it. The code of the npm package is the same as the one in the repo, so if there are not any problems with the cloned widget, there should not be any with the npm package.
 
 ### Extending The Widget :
 
-In order to extend the capabilities of the widget, it is advised to clone the widget loccaly as it is easier to manage and debug. 
+In order to extend the capabilities of the widget, it is advised to clone the widget locally as it is easier to manage and debug. 
 
 ## Tenancy Plugin Feature  
 
 There is also a version of the widget under the feature/tenancy branch that is designed to work along with the Tenancy Plugin mad for the Cheshire Cat framework ( see here : https://github.com/conveos/cheshirecat-tenancy-plugin).
 
-The Tenancy Plugin feature  enables the capability to use the Cheshire Cat and the widget in multiple environments while only having a Single Cheshire Cat Instance . 
+The Tenancy Plugin feature enables the capability to use the Cheshire Cat and the widget in multiple environments while only having a Single Cheshire Cat Instance. 
 
 This feature adds an extra field **"tenant_id=< YOUR_TENANT_ID>\n"** needed for initialization which later added as a prefix whenever the user sends a message, on the sendMessage function of the widget.
 
