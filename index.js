@@ -7,31 +7,26 @@ import { IoSend } from "react-icons/io5";
 import Button from "@mui/material/Button";
 import { CatClient } from "ccat-api";
 
-
 const Widget_CCAT = ({
   baseUrl = "localhost",
   port = "1865",
   userID = "user",
+  secure = false,
   open_icon =  "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg", 
   closed_icon = "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg",
   sockets_await = 5,
   widget_width = 900,
   widget_height = 800,
-
   translatedText = {
     en: {  
-    initialPhrase: "Welcome, how may I assist you today?",
+      initialPhrase: "Welcome, how may I assist you today?",
       sorryPhrase: "Sorry , something went wrong ...",
       chatUnderneathMessage: "The assistant sometimes can 'lie', please take care.",
       widget_loading_message : "Loading, please wait...",
       process_wait_text : "Please wait till the process has finished."
-      
     }
   }
-
 }) => {
-
-
   const [isHovered, setIsHovered] = useState(false);
   const [isOpenChat, setIsOpenChat] = useState(false);
   const [canAnimate, setCanAnimate] = useState(true);
@@ -41,10 +36,7 @@ const Widget_CCAT = ({
   const messagesContainerRef = useRef(null);
   const [gatto_attivo, setGattoAttivo] = useState(false);
   const [cat, setcat] = useState(false);
-
-
-    const [spinner,setSpinner] = useState(true);
-  
+  const [spinner,setSpinner] = useState(true);
 
   const socketCounter = useRef(0);
   const clientFlag = useRef(false);
@@ -52,33 +44,26 @@ const Widget_CCAT = ({
   const userPreferredLang = navigator.language ;  //the return value is  for example : en-EN
   const languageCode = userPreferredLang.split('-')[0]; 
 
- 
-
-
-// this function in combination with the above json , helps us determine
-// the preferred Language of the user's browser
+  // this function in combination with the above json , helps us determine
+  // the preferred Language of the user's browser
   const translator = ( phrase ) => {
-
     const language = translatedText[languageCode] || translatedText['en'];      
     return language[phrase] || console.log(`Error , translation for ${phrase} not found.`);
-}
+  }
 
-
-
-// function that gets the chat view on the bottom on every new update on the messages
+  // function that gets the chat view on the bottom on every new update on the messages
   const scrollToBottom = () => {
     if (messagesContainerRef.current) {
       messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
     }
-
   };
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
-// this function handles the messages received from the Cat
-// where it concatenates the most recent token to the most recent messages.text
+  // this function handles the messages received from the Cat
+  // where it concatenates the most recent token to the most recent messages.text
   const msgTokenAdd = (msg) => {
     setMessages((prevMessages) => {
       // Create a copy of the last message and append the new token
@@ -96,11 +81,10 @@ const Widget_CCAT = ({
     });
   };
 
-// this function handles the message exchange from the part of the user
+  // this function handles the message exchange from the part of the user
   const sendMessage = async () => {
     if (input !== "") {
       if (gatto_attivo) {
-
         setIsProcessing(true);
         setMessages([...messages, { text: input, sender: "user" }]);
         setMessages((prevMessages) => [
@@ -121,15 +105,15 @@ const Widget_CCAT = ({
               // Split the message content into words
               msgTokenAdd(msg.content);
               if( msg.type === "chat"){
-//              the last message sent is an object containing all the generated message under 
-//              the msg.type = "chat" , so when that comes 
-//              we set processing to false in order to be able to write 
-//              again to the bot
-//              You might want to enable/disable it base on whether your llm is a streaming model or not
-//              the way the current widget works is suitable for streaming
+                /* the last message sent is an object containing all the generated message under 
+                  the msg.type = "chat" , so when that comes 
+                  we set processing to false in order to be able to write 
+                  again to the bot
+                  You might want to enable/disable it base on whether your llm is a streaming model or not
+                  the way the current widget works is suitable for streaming
+                */
                 setIsProcessing(false);
               }
-              
             })
             .onError((err) => {
               console.log(err);
@@ -155,16 +139,15 @@ const Widget_CCAT = ({
     }
   };
 
-
- async function restCCAT() {    
-    if(!clientFlag.current){
-
-      // in the original widget by Andrea Pesce , it is : setcat instead of setCat 
+  async function restCCAT() {    
+    if (!clientFlag.current) {
+      // in the original widget by Andrea Pesce, it is : setcat instead of setCat 
       setcat(
         new CatClient({
-          baseUrl : baseUrl,
+          baseUrl: baseUrl,
           port: port,
-          user:userID 
+          user: userID,
+          secure  
         })
           .onConnected(() => {
             console.log(`Socket connected ${socketCounter.current}`);                  
@@ -179,17 +162,15 @@ const Widget_CCAT = ({
                 },
               ]);       
             }
-            else{
+            else {
               setMessages([
                 {
                   text: translator('initialPhrase') ,
                   sender: "bot",
                 },
               ]);        
-              setSpinner(false);        
-              
-          }      
-          
+              setSpinner(false);               
+            }
           })
           .onError((err) => {
             console.log(err);
@@ -204,12 +185,9 @@ const Widget_CCAT = ({
     }   
   }
 
-
   useEffect(() => {
     restCCAT();
   }, [gatto_attivo,socketCounter]);
-
-
 
   const Spinner = () => {
     const mountTime = React.useRef(Date.now());
@@ -222,10 +200,7 @@ const Widget_CCAT = ({
     );
   };
 
-
-
   useEffect(() => {
-
     const targetWindow = window.parent.window;
     const origin = '*';
     //Iframe dimensions
@@ -245,15 +220,11 @@ const Widget_CCAT = ({
     }
     }, [isOpenChat]);
 
-
-  
-
   const chatStyle = isOpenChat ? {
     width: `${widget_width}px`,
     height: `${widget_height}px`,
     overflow: 'hidden',
   } : {};
-
 
   return (
     <motion.div
@@ -379,7 +350,6 @@ const Widget_CCAT = ({
       </div>
     </motion.div>
   );
-  
 };
 
 export default Widget_CCAT;
