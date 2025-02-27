@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import Widget_CCAT from "widget-ccat-v2";
+//import Widget_CCAT from "widget-ccat-v2";
+import Widget_CCAT from "./widgetCcat";
 
 function App() {
   return (
