@@ -12,20 +12,21 @@ const Widget_CCAT = ({
   port = "1865",
   userID = "user",
   secure = false,
-  open_icon =  "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg", 
+  open_icon = "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg",
   closed_icon = "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg",
   sockets_await = 5,
   widget_width = 900,
   widget_height = 800,
   translatedText = {
-    en: {  
+    en: {
       initialPhrase: "Welcome, how may I assist you today?",
       sorryPhrase: "Sorry , something went wrong ...",
-      chatUnderneathMessage: "The assistant sometimes can 'lie', please take care.",
-      widget_loading_message : "Loading, please wait...",
-      process_wait_text : "Please wait till the process has finished."
-    }
-  }
+      chatUnderneathMessage:
+        "The assistant sometimes can 'lie', please take care.",
+      widget_loading_message: "Loading, please wait...",
+      process_wait_text: "Please wait till the process has finished.",
+    },
+  },
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isOpenChat, setIsOpenChat] = useState(false);
@@ -36,25 +37,29 @@ const Widget_CCAT = ({
   const messagesContainerRef = useRef(null);
   const [gatto_attivo, setGattoAttivo] = useState(false);
   const [cat, setcat] = useState(false);
-  const [spinner,setSpinner] = useState(true);
+  const [spinner, setSpinner] = useState(true);
 
   const socketCounter = useRef(0);
   const clientFlag = useRef(false);
 
-  const userPreferredLang = navigator.language ;  //the return value is  for example : en-EN
-  const languageCode = userPreferredLang.split('-')[0]; 
+  const userPreferredLang = navigator.language; //the return value is  for example : en-EN
+  const languageCode = userPreferredLang.split("-")[0];
 
   // this function in combination with the above json , helps us determine
   // the preferred Language of the user's browser
-  const translator = ( phrase ) => {
-    const language = translatedText[languageCode] || translatedText['en'];      
-    return language[phrase] || console.log(`Error , translation for ${phrase} not found.`);
-  }
+  const translator = (phrase) => {
+    const language = translatedText[languageCode] || translatedText["en"];
+    return (
+      language[phrase] ||
+      console.log(`Error , translation for ${phrase} not found.`)
+    );
+  };
 
   // function that gets the chat view on the bottom on every new update on the messages
   const scrollToBottom = () => {
     if (messagesContainerRef.current) {
-      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+      messagesContainerRef.current.scrollTop =
+        messagesContainerRef.current.scrollHeight;
     }
   };
 
@@ -69,14 +74,13 @@ const Widget_CCAT = ({
       // Create a copy of the last message and append the new token
       const updatedMessages = [...prevMessages];
       const latestMessage = { ...updatedMessages[updatedMessages.length - 1] };
-      latestMessage.text += msg ;
-      if( latestMessage.sender === "bot_writing" )
-      {
+      latestMessage.text += msg;
+      if (latestMessage.sender === "bot_writing") {
         latestMessage.sender = "bot"; // we have to change the sender from bot_writing to bot to disable the loading dots
       }
       // Replace the last message with the updated one
       updatedMessages[updatedMessages.length - 1] = latestMessage;
-      
+
       return updatedMessages;
     });
   };
@@ -94,17 +98,16 @@ const Widget_CCAT = ({
         setInput("");
 
         try {
-          cat.send(input); 
+          cat.send(input);
           cat
             .onConnected(() => {
               console.log("Socket connected");
             })
             .onMessage((msg) => {
-
               console.log(`MESSAGE CONTENT: ${msg}\n`); // for debug
               // Split the message content into words
               msgTokenAdd(msg.content);
-              if( msg.type === "chat"){
+              if (msg.type === "chat") {
                 /* the last message sent is an object containing all the generated message under 
                   the msg.type = "chat" , so when that comes 
                   we set processing to false in order to be able to write 
@@ -132,44 +135,43 @@ const Widget_CCAT = ({
           console.error("Error receiving bot response :", error);
           setMessages((prevMessages) => [
             ...prevMessages,
-            { text: translator('sorryPhrase'), sender: "bot" },
+            { text: translator("sorryPhrase"), sender: "bot" },
           ]);
         }
       }
     }
   };
 
-  async function restCCAT() {    
+  async function restCCAT() {
     if (!clientFlag.current) {
-      // in the original widget by Andrea Pesce, it is : setcat instead of setCat 
+      // in the original widget by Andrea Pesce, it is : setcat instead of setCat
       setcat(
         new CatClient({
           baseUrl: baseUrl,
           port: port,
           user: userID,
-          secure  
+          secure,
         })
           .onConnected(() => {
-            console.log(`Socket connected ${socketCounter.current}`);                  
+            console.log(`Socket connected ${socketCounter.current}`);
             clientFlag.current = true;
             setGattoAttivo(true);
-            if(socketCounter.current < sockets_await ){     
+            if (socketCounter.current < sockets_await) {
               socketCounter.current++;
               setMessages([
                 {
-                  text: translator("widget_loading_message") ,
+                  text: translator("widget_loading_message"),
                   sender: "bot",
                 },
-              ]);       
-            }
-            else {
+              ]);
+            } else {
               setMessages([
                 {
-                  text: translator('initialPhrase') ,
+                  text: translator("initialPhrase"),
                   sender: "bot",
                 },
-              ]);        
-              setSpinner(false);               
+              ]);
+              setSpinner(false);
             }
           })
           .onError((err) => {
@@ -177,54 +179,69 @@ const Widget_CCAT = ({
             setSpinner(false);
             clientFlag.current = true;
             setGattoAttivo(false);
-          })
+          }),
       );
     }
-    if(cat){
-      cat.api.memory.wipeConversationHistory(); 
-    }   
+    if (cat) {
+      cat.api.memory.wipeConversationHistory();
+    }
   }
 
   useEffect(() => {
     restCCAT();
-  }, [gatto_attivo,socketCounter]);
+  }, [gatto_attivo, socketCounter]);
 
   const Spinner = () => {
     const mountTime = React.useRef(Date.now());
     const mountDelay = -(mountTime.current % 1000);
-    
+
     return (
-      <div className="spinner-container">     
-        <div className="spinner" id="spinner" style={{ '--spinner-delay': `${mountDelay}ms`}}></div>    
+      <div className="spinner-container">
+        <div
+          className="spinner"
+          id="spinner"
+          style={{ "--spinner-delay": `${mountDelay}ms` }}
+        ></div>
       </div>
     );
   };
 
   useEffect(() => {
     const targetWindow = window.parent.window;
-    const origin = '*';
+    const origin = "*";
     //Iframe dimensions
-    const openDimensions = { width: widget_width * 1.1, height: widget_height * 1.1 };
+    const openDimensions = {
+      width: widget_width * 1.1,
+      height: widget_height * 1.1,
+    };
     const closedDimensions = { width: 90, height: 90 };
 
-    if (!isOpenChat) {      
-      targetWindow.postMessage({ 
-        type: 'widgetClosed', 
-        dimensions: closedDimensions 
-      }, origin);
-    } else {      
-      targetWindow.postMessage({ 
-        type: 'widgetOpened', 
-        dimensions: openDimensions 
-      }, origin);
+    if (!isOpenChat) {
+      targetWindow.postMessage(
+        {
+          type: "widgetClosed",
+          dimensions: closedDimensions,
+        },
+        origin,
+      );
+    } else {
+      targetWindow.postMessage(
+        {
+          type: "widgetOpened",
+          dimensions: openDimensions,
+        },
+        origin,
+      );
     }
-    }, [isOpenChat]);
+  }, [isOpenChat]);
 
-  const chatStyle = isOpenChat ? {
-    width: `${widget_width}px`,
-    height: `${widget_height}px`,
-    overflow: 'hidden',
-  } : {};
+  const chatStyle = isOpenChat
+    ? {
+        width: `${widget_width}px`,
+        height: `${widget_height}px`,
+        overflow: "hidden",
+      }
+    : {};
 
   return (
     <motion.div
@@ -245,7 +262,7 @@ const Widget_CCAT = ({
           : null
       }
     >
-      <div className={!isOpenChat ? "rectangle-closed" : "rectangle" }>
+      <div className={!isOpenChat ? "rectangle-closed" : "rectangle"}>
         {isOpenChat ? (
           <div className="chat-header">
             <div className="rectangle-img-container">
@@ -253,11 +270,11 @@ const Widget_CCAT = ({
                just change the img source in the constractor */}
               <img
                 className="open-chat-icon"
-                src = {open_icon}
+                src={open_icon}
                 alt="open chat icon"
-             />
+              />
             </div>
-  
+
             <div
               className="close-chat-X"
               onClick={() => {
@@ -265,25 +282,39 @@ const Widget_CCAT = ({
               }}
             >
               <svg className="circle-X" viewBox="0 0 24 24">
-                <line x1="3" y1="3" x2="21" y2="21" stroke="white" strokeWidth="2" />
-                <line x1="3" y1="21" x2="21" y2="3" stroke="white" strokeWidth="2" />
+                <line
+                  x1="3"
+                  y1="3"
+                  x2="21"
+                  y2="21"
+                  stroke="white"
+                  strokeWidth="2"
+                />
+                <line
+                  x1="3"
+                  y1="21"
+                  x2="21"
+                  y2="3"
+                  stroke="white"
+                  strokeWidth="2"
+                />
               </svg>
             </div>
           </div>
         ) : (
           <img
             className="closed-chat-icon"
-            src = {closed_icon}
+            src={closed_icon}
             alt="close chat icon"
           />
         )}
-  
+
         {isOpenChat ? (
           <div className="chat-page">
             <div className="chat-messages" ref={messagesContainerRef}>
               {messages.map((message, index) => (
                 <div key={index} className={`message ${message.sender}`}>
-                  { message.sender === "bot_writing" ? (
+                  {message.sender === "bot_writing" ? (
                     <div className="dots">
                       <div></div>
                       <div></div>
@@ -294,24 +325,24 @@ const Widget_CCAT = ({
                   )}
                 </div>
               ))}
-  
+
               {spinner && <Spinner />}
             </div>
-  
+
             {spinner ? (
               <div style={{ alignSelf: "center" }}>
-                {translator('process_wait_text')} 
+                {translator("process_wait_text")}
               </div>
             ) : (
               " "
             )}
-  
+
             {!spinner ? (
               <>
                 <div className="chat-input">
                   <TextField
                     label="Feel free to ask anything!"
-                   variant="standard"
+                    variant="standard"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyUp={(e) => {
@@ -339,7 +370,7 @@ const Widget_CCAT = ({
                     color: "#999",
                   }}
                 >
-                  { translator("chatUnderneathMessage") }
+                  {translator("chatUnderneathMessage")}
                 </p>
               </>
             ) : (
