@@ -344,7 +344,7 @@ const Widget_CCAT = ({
               <>
                 <div className="chat-input">
                   <TextField
-                    label={translator(exampleText)}
+                    label={translator("exampleText")}
                     variant="standard"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
