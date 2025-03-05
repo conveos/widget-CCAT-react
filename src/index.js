@@ -26,6 +26,8 @@ const Widget_CCAT = ({
         "The assistant sometimes can 'lie', please take care.",
       widget_loading_message: "Loading, please wait...",
       process_wait_text: "Please wait till the process has finished.",
+      exampleText:
+        "Feel free to ask anything!aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     },
   },
 }) => {
@@ -342,7 +344,7 @@ const Widget_CCAT = ({
               <>
                 <div className="chat-input">
                   <TextField
-                    label="Feel free to ask anything!"
+                    label={translator(exampleText)}
                     variant="standard"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
