@@ -1,30 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
-//import Widget_CCAT from "widget-ccat-v2";
-import Widget_CCAT from "./widgetCcat";
+import Widget_CCAT from "widget-ccat-v2";
+//import Widget_CCAT from "./widgetCcat";
 
 function App() {
   return (
     <div>
       <Widget_CCAT
         baseUrl="cat.winelovers.pro"
-        host="cat.winelovers.pro"
-        secure={true}
-        port="443"
+        port=""
         userID="user"
-        closed_icon="https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg"
-        open_icon="https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg"
+        secure={true}
+        closed_icon="https://officeofcards.com/wp_publifarm/wp-content/uploads/2022/09/officeofcards-logo-black.svg"
+        open_icon="https://officeofcards.com/wp_publifarm/wp-content/uploads/2022/09/officeofcards-logo-black.svg"
         sockets_await={5}
-        widget_width={330}
+        widget_width={400}
         widget_height={600}
         translatedText={{
           en: {
-            initialPhrase: "Welcome, how may I assist you today?",
-            sorryPhrase: "Sorry , something went wrong ...",
+            initialPhrase:
+              "Ciao, sono la versione digitale di Davide Cervellin! Come posso aiutarti?",
+            sorryPhrase: "Spiacente, qualcosa è andato storto...",
             chatUnderneathMessage:
-              "The assistant sometimes can 'lie', please take care.",
-            widget_loading_message: "Loading, please wait...",
-            process_wait_text: "Please wait till the proccess has finished.",
+              "L'assistente a volte può 'mentire', fai attenzione.",
+            widget_loading_message: "Caricamento in corso, attendere prego...",
+            process_wait_text: "Attendere fino al completamento del processo.",
+            exampleText: "Sentiti libero di chiedere qualsiasi cosa!",
           },
         }}
       />
