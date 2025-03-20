@@ -1,6 +1,6 @@
 # Chat widget
 
-/// DESCRIPTION HERE
+This is a chat-box widget that is powered by the Cheshire Cat AI framework that aims to serve as a digital assistant of your choice. This widget is made in plain html/css/js so that it can be easily installed in any webpage. 
 
 ## Usage
 
