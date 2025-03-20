@@ -9,6 +9,7 @@ link.href = "https://fonts.googleapis.com/icon?family=Material+Icons";
 link.rel = "stylesheet";
 document.head.appendChild(link);
 
+
 let CONFIGURATION = {
   userId: "",
   host: "http://localhost:1865",
@@ -18,20 +19,19 @@ let CONFIGURATION = {
   closedIcon:
     "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg",
   secure: false,
-  width: 300,
-  height: 400,
+  width: "300px",
+  height: "400px",
   text: {
     en: {
       initialPhrase: "Welcome, how may I assist you today?",
       sorryPhrase: "Sorry , something went wrong ...",
-      examplePhrase: "Feel free to ask anything!",
-      chatUnderneathMessage:
+      inputPlaceholder: "Feel free to ask anything!",
+      chatNote:
         "The assistant sometimes can lie, please take care.",
     },
   },
 };
 
-// +++++++++++++++
 const userPreferredLang = navigator.language; //the return value is  for example : en-EN
 const languageCode = userPreferredLang.split("-")[0];
 
@@ -44,14 +44,13 @@ const translator = (phrase) => {
     console.log(`Error , translation for ${phrase} not found.`)
   );
 };
-// +++++++++++++++
 
 let input;
 let button;
 let logo;
 let messages;
 let container;
-let translatedText;
+
 const CHAT_MESSAGE_SELECTOR = ".chat-message";
 
 const createElementFromHtml = (html) => {
@@ -68,8 +67,8 @@ const loading = createElementFromHtml(`
 
 const widget = createElementFromHtml(
   `
-   <div class="chat chat--active">
-        <img class="chat-logo"  alt="">
+   <div class="chat">
+        <img class="chat-logo" src="${CONFIGURATION.closedIcon}" alt="">
         <div class="chat-container">
             <div class="chat-header">
                 <button class="close-btn" onclick="toggleChat()">&times;</button>
@@ -77,69 +76,58 @@ const widget = createElementFromHtml(
             <div class="chat-messages">
             </div>
             <div class="chat-input">
-                <input placeholder="" type="text">
+                <input placeholder="${CONFIGURATION.text.en.inputPlaceholder}" type="text">
                 <button onclick="sendMessage()"><i class="material-icons">send</i></button>
             </div>
-            <div class="chat-underneath"></div>
+            <p class="chat-note">${CONFIGURATION.text.en.chatNote}</p>
         </div>
-    </div>`,
-);
+    </div>`
+)
+
+const changeLogo = () => {
+  logo = document.querySelector(".chat-logo");
+  if (widget.classList.contains("chat--active")) {
+    logo.src = CONFIGURATION.openIcon;
+  }
+  else {
+    logo.src = CONFIGURATION.closedIcon;
+  }
+};
 
 const initialize = () => {
-  const userId = script.getAttribute("data-userId");
-  const host = script.getAttribute("data-host");
-  const selector = script.getAttribute("data-selector");
-  const secure = script.getAttribute("data-secure");
-  const openIcon = script.getAttribute("data-openIcon");
-  const closedIcon = script.getAttribute("data-closedIcon");
-  const text = JSON.parse(script.getAttribute("data-messages"));
-  const width = script.getAttribute("data-width");
-  const height = script.getAttribute("data-height");
+  const config_keys = Object.keys(CONFIGURATION);
 
-  CONFIGURATION = {
-    ...CONFIGURATION,
-    ...{
-      selector,
-      host,
-      userId,
-      secure,
-      openIcon,
-      closedIcon,
-      text,
-      width,
-      height,
-    },
-  };
+  config_keys.forEach(key => {
+    const val = script.getAttribute(`data-${key}`);
+    if (val === null) return;
+    CONFIGURATION[key] = val;
+  });
 
-  if (selector) {
-    document.querySelector(selector).appendChild(widget);
+
+  if (CONFIGURATION.selector) {
+    document.querySelector(CONFIGURATION.selector).appendChild(widget);
   } else {
     document.body.appendChild(widget);
   }
 
-  chatActive = document.querySelector(".chat--active");
-  chatActive.style.blockSize = CONFIGURATION.height + "px";
-  chatActive.style.inlineSize = CONFIGURATION.width + "px";
-
   input = document.querySelector(".chat-input input");
-  input.placeholder = translator("examplePhrase");
+  input.placeholder = translator("inputPlaceholder");
+
   container = document.querySelector(".chat-container");
   button = document.querySelector(".chat-input button");
   logo = document.querySelector(".chat-logo");
   messages = document.querySelector(".chat-messages");
 
-  underneathMessage = document.querySelector(".chat-underneath");
-  underneathMessage.textContent = translator("chatUnderneathMessage");
+  const chatNote = document.querySelector(".chat-note");
+  chatNote.textContent = translator("chatNote");
 
-  logo.src = CONFIGURATION.openIcon;
+
+  widget.style.setProperty("--widget-active-height", CONFIGURATION.height);
+  widget.style.setProperty("--widget-active-width", CONFIGURATION.width);
 
   logo.addEventListener("click", () => {
-    logo.src = CONFIGURATION.openIcon;
-    let catChat = document.querySelector(".chat");
-    catChat.style.blockSize = CONFIGURATION.height + "px";
-    catChat.style.inlineSize = CONFIGURATION.width + "px";
-
     document.querySelector(".chat").classList.add("chat--active");
+    changeLogo();
   });
 
   input.addEventListener("keypress", (ev) => {
@@ -148,18 +136,14 @@ const initialize = () => {
   });
 
   addMessage("bot", translator("initialPhrase"));
-};
+}
 
 const toggleChat = () => {
-  logo.src = CONFIGURATION.closedIcon;
-  let catChat = document.querySelector(".chat");
-  catChat.style.blockSize = "40px";
-  catChat.style.inlineSize = "40px";
-
   const chat = document.querySelector(".chat");
-  chat.classList.contains("chat--active")
-    ? chat.classList.remove("chat--active")
-    : chat.classList.add("chat--active");
+  chat.classList.contains("chat--active") ?
+    chat.classList.remove("chat--active") :
+    chat.classList.add("chat--active");
+  changeLogo();
 };
 
 const sendMessage = async () => {
