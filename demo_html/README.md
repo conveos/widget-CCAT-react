@@ -12,7 +12,6 @@ In order to use the widget, in your HTML file ad the following:
   data-widget
   src="{server_url}/widget.js"
   data-host="{server_url}"
-  data-userId="randomuserid"
   data-openIcon="https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg"
   data-closedIcon="https://officeofcards.com/wp_publifarm/wp-content/uploads/2022/09/officeofcards-logo-black.svg"
   data-secure="false"
@@ -28,7 +27,6 @@ In order to use the widget, in your HTML file ad the following:
 | --------------- | ---------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | data-widget     | Required to recognise the script attributes    | ✅       | null                                                                                                                                                                                                                                            |
 | data-host       | URL of CAT server                              | ✅       | <http://localhost>                                                                                                                                                                                                                              |
-| data-userId     | Random user id to be used in CAT               | ✅       | any                                                                                                                                                                                                                                             |
 | data-selector   | HTML selector to be rendered inside an element | ⬜       | body                                                                                                                                                                                                                                            |
 | data-openIcon   | Icon url when chat is opened                   | ⬜       | <https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg>                                                                                                                                                                       |
 | data-closedIcon | Icon url when chat is closed                   | ⬜       | <https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg>                                                                                                                                                                       |
