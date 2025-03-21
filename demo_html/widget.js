@@ -18,7 +18,6 @@ let CONFIGURATION = {
     "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg",
   closedIcon:
     "https://cheshire-cat-ai.github.io/docs/assets/img/cheshire-cat-logo.svg",
-  secure: false,
   width: "300px",
   height: "400px",
   text: {
@@ -50,7 +49,7 @@ let button;
 let logo;
 let messages;
 let container;
-
+let userId;
 const CHAT_MESSAGE_SELECTOR = ".chat-message";
 
 const createElementFromHtml = (html) => {
@@ -118,6 +117,8 @@ const initialize = () => {
   logo = document.querySelector(".chat-logo");
   messages = document.querySelector(".chat-messages");
 
+  userId = generateUserId();
+
   const chatNote = document.querySelector(".chat-note");
   chatNote.textContent = translator("chatNote");
 
@@ -174,7 +175,7 @@ const addMessage = (sender, message) => {
 
 const fetchCatMessage = async (message) => {
   const headers = new Headers();
-  headers.append("user_id", CONFIGURATION.userId);
+  headers.append("user_id", userId);
   headers.append("Content-Type", "application/json");
 
   showLoading();
@@ -215,6 +216,11 @@ const hideLoading = () => {
 function toggleInput(disabled) {
   input.disabled = disabled;
   button.disabled = disabled;
+}
+
+const generateUserId = () =>{
+  const userId = crypto.randomUUID();
+  return userId;
 }
 
 window.onload = initialize;
