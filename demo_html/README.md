@@ -33,7 +33,6 @@ In order to use the widget, in your HTML file ad the following:
 | data-messages   | Default messages of the widget                 | ⬜        | {"en":{"initialPhrase": "Welcome, how may I assist you today?", "examplePhrase": "Feel free to ask anything!", "sorryPhrase": "Sorry, something went wrong ...", "chatUnderneathMessage": "The assistant sometimes can lie, please take care."} |
 | data-width      | The width of the widget                        | ⬜        | 300px                                                                                                                                                                                                                                             |
 | data-height     | The height of the widget                       | ⬜        | 400px                                                                                                                                                                                                                                             |
-
 ### TODO
 
 - Add translations : ✅

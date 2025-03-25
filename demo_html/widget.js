@@ -99,7 +99,10 @@ const initialize = () => {
   config_keys.forEach(key => {
     const val = script.getAttribute(`data-${key}`);
     if (val === null) return;
-    CONFIGURATION[key] = val;
+    if ( key === "text"){
+      CONFIGURATION[key] = JSON.parse(val);
+    }
+    else CONFIGURATION[key] = val;
   });
 
 
@@ -126,6 +129,7 @@ const initialize = () => {
   widget.style.setProperty("--widget-active-height", CONFIGURATION.height);
   widget.style.setProperty("--widget-active-width", CONFIGURATION.width);
 
+  logo.src = CONFIGURATION.closedIcon;
   logo.addEventListener("click", () => {
     document.querySelector(".chat").classList.add("chat--active");
     changeLogo();
@@ -221,6 +225,18 @@ function toggleInput(disabled) {
 const generateUserId = () =>{
   const userId = crypto.randomUUID();
   return userId;
+}
+
+const altGenerateUserId = () =>{
+  let userId = sessionStorage.getItem('widgetUserId');
+  
+  if (!userId) {
+    userId = crypto.randomUUID(); // or any ID generation logic
+    sessionStorage.setItem('widgetUserId', userId);
+  }
+  
+  console.log('User ID:', userId);
+    return userId;
 }
 
 window.onload = initialize;
